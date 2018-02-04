@@ -1,0 +1,8 @@
+<form name="signin" action="registration.jsp" method="post">
+    Sign in <br>
+    <table>
+        <tr><td> username </td><td> <input name="username" value="" required="true"> </td></tr>
+        <tr><td> password </td><td> <input name="password" value="" required="true"> </td></tr>
+    </table>
+    <input name="btnReg" type="submit" value="signin"/>
+</form>

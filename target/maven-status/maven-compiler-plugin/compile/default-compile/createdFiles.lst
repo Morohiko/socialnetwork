@@ -1,0 +1,16 @@
+Service\Authorization.class
+Service\FriendList.class
+Controller\AnotherPage.class
+DAO\MetaData.class
+Service\AnotherUser.class
+Controller\FriendListController.class
+Controller\Validation.class
+DAO\ProcessDB.class
+Service\Registration.class
+Controller\AllUserInformation.class
+Model\AnotherUser.class
+Service\AllUser.class
+Model\User.class
+Model\Data.class
+Controller\FriendController.class
+Controller\UserInformation.class
