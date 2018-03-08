@@ -1,0 +1,5 @@
+<%ArrayList<Message> list = (ArrayList<Message>) Data.getInstance().
+        getUser(request.getSession().getId()).getMessages();%>
+<%for(Message msg:list){%><br>
+id: <%=msg.getId()%>  text: <%=msg.getText()%>  who: <%=msg.getWho()%>  time: <%=msg.getTime()%>
+<%}%>

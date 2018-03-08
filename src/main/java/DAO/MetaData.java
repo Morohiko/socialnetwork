@@ -1,9 +1,10 @@
 package DAO;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 class MetaData {
     private Connection connection = null;
@@ -50,14 +51,12 @@ class MetaData {
         try {
             InitialContext ic = new InitialContext();
             DataSource dataSource  = (DataSource) ic.lookup("jdbc/users");
-//            ic.
             connection = dataSource.getConnection();
             ic.close();
         } catch (SQLException e) {
-            System.out.println("metagetsql ex");
             e.printStackTrace();
         }catch (Exception e){
-            System.out.println("metagetother ex");
+            e.printStackTrace();
         }
     }
 }

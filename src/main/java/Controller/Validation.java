@@ -7,33 +7,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class Validation extends HttpServlet{
-    private HttpServletResponse resp;
-    private HttpServletRequest req;
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        resp = response;
-        req = request;
-        doProcess();
-    }
-
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        req = request;
-        resp = response;
-        doProcess();
-    }
-
+public class Validation extends MainController{
     private String sessionID;
-    private void doProcess() throws ServletException, IOException{
+
+    protected void doProcess(){
         sessionID = req.getSession().getId();
         try {
             if (req.getParameter("btnReg").equals("reg")) reg();
             if (req.getParameter("btnReg").equals("signin")) signin();
-        }catch (Exception e){}
+        }catch (Exception ignored){}
     }
 
     private void reg() throws IOException {

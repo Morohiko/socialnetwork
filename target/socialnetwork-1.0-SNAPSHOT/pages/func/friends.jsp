@@ -1,11 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="Model.AnotherUser" %><%--
-  Created by IntelliJ IDEA.
-  User: hp
-  Date: 24.01.2018
-  Time: 17:57
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Model.AnotherUser" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,7 +26,5 @@ Username = <%=user.getUsername()%>
 <a href="friends.jsp?do=remove&id=<%=user.getId()%>">remove</a>
 <a href="message.jsp?do=open&id=<%=user.getId()%>">message</a>
 <%}%>
-
-
 </body>
 </html>

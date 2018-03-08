@@ -34,7 +34,16 @@ public class ProcessDB {
         }
     }
 
+    public static void addToDiag(String idDiag, String text, String datatime, String who){
+        try{
+            MetaData.getInstance().getStatement().executeUpdate("INSERT INTO dialogs.diag"+idDiag+
+                    "(text, datatime, who)" + " VALUES ('"+text+"', '"+datatime+"', '"+who+"');");
+            MetaData.getInstance().closeConn();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
+    }
 
     public static ResultSet getFromUsers(){
         try {
@@ -49,7 +58,7 @@ public class ProcessDB {
 
     public static String getUsernameFromUserByID(int id){
         ResultSet resultSet;
-        String username = "lala";
+        String username = " ";
         try {
             resultSet = MetaData.getInstance().getStatement().executeQuery("SELECT * FROM socnetdb.users WHERE id=" + id + ";");
             while(resultSet.next()){
@@ -97,17 +106,30 @@ public class ProcessDB {
 
     public static void createTableDialog(int idDialog){
         try {
-            System.out.println("idDiag = " + idDialog);
+            System.out.println("idDiag createTableDiag= " + idDialog);
             MetaData.getInstance().getStatement().executeUpdate("CREATE TABLE dialogs.diag" + idDialog +
                     "(" +
                     "text VARCHAR(512) NOT NULL, " +
                     "datatime VARCHAR(16) NOT NULL, " +
                     "who VARCHAR(128) NOT NULL " +
-                    ")");
+                    ");");
             MetaData.getInstance().closeConn();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static ResultSet getFromDialogs(int idDiag){
+        try {
+            ResultSet rs = MetaData.getInstance().getStatement().executeQuery("SELECT * FROM " +
+                    "dialogs.diag" + idDiag + ";");
+            MetaData.getInstance().closeConn();
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static ResultSet getFromDiagList(){
@@ -121,23 +143,24 @@ public class ProcessDB {
         }
         return null;
     }
-    public static ResultSet getFromDiagList(int idUser1, int idUser2){
-        System.out.println("while 0 idUser1 = " + idUser1 + " idUser2 = " + idUser2);
-        try {
-            ResultSet rs = MetaData.getInstance().getStatement().executeQuery("SELECT * FROM " +
-                    "socnetdb.dialoglist WHERE user1=" + idUser1 + " AND user2=" + idUser2 + ";");
-            MetaData.getInstance().closeConn();
-            return rs;
-        } catch (SQLException e) {e.printStackTrace();}
-        System.out.println("while 1");
-        try {
-            ResultSet rs = MetaData.getInstance().getStatement().executeQuery("SELECT * FROM " +
-                    "socnetdb.dialoglist WHERE user2=" + idUser1 + " AND user1=" + idUser2 + ";");
-            MetaData.getInstance().closeConn();
-            return rs;
-        } catch (SQLException e) {e.printStackTrace();}
-        System.out.println("while2");
-        return null;
-    }
+
+//    public static ResultSet getFromDiagList(int idUser1, int idUser2){
+//        System.out.println("while 0 idUser1 = " + idUser1 + " idUser2 = " + idUser2);
+//        try {
+//            ResultSet rs = MetaData.getInstance().getStatement().executeQuery("SELECT * FROM " +
+//                    "socnetdb.dialoglist WHERE user1=" + idUser1 + " AND user2=" + idUser2 + ";");
+//            MetaData.getInstance().closeConn();
+//            return rs;
+//        } catch (SQLException e) {e.printStackTrace();}
+//        System.out.println("while 1");
+//        try {
+//            ResultSet rs = MetaData.getInstance().getStatement().executeQuery("SELECT * FROM " +
+//                    "socnetdb.dialoglist WHERE user2=" + idUser1 + " AND user1=" + idUser2 + ";");
+//            MetaData.getInstance().closeConn();
+//            return rs;
+//        } catch (SQLException e) {e.printStackTrace();}
+//        System.out.println("while2");
+//        return null;
+//    }
 
 }

@@ -6,22 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-public class UserInformation extends HttpServlet {
-    private HttpServletRequest req;
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        req = request;
-        doProcess();
-    }
-
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        req = request;
-        doProcess();
-    }
+public class UserInformation extends MainController {
     private String sessionID;
 
-    private void doProcess(){
+    protected void doProcess(){
             sessionID = req.getSession().getId();
     }
 

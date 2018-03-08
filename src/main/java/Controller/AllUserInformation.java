@@ -8,18 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AllUserInformation extends HttpServlet{
-    private HttpServletRequest req;
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.req = req;
-    }
-
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.req = req;
-    }
-
+public class AllUserInformation extends MainController{
     public void getList(){
         AllUser allUser = new AllUser();
         try {
@@ -30,6 +19,4 @@ public class AllUserInformation extends HttpServlet{
         }catch (Exception e){}
         allUser.getAllUser(req.getSession().getId());
     }
-
-
 }

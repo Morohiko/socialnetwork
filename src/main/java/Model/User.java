@@ -9,6 +9,15 @@ public class User {
     private int id;
 
     private List<AnotherUser> friendList = new ArrayList<AnotherUser>();
+    private List<Message> messages = new ArrayList<Message>();
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
 
     public void setFriendList(ArrayList<AnotherUser> list){
         friendList = list;

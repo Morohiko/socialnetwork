@@ -8,18 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AnotherPage extends HttpServlet {
-    private HttpServletRequest req;
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.req = req;
-    }
-
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.req = req;
-    }
-
+public class AnotherPage extends MainController {
     public void createAnotherPage(){
         int id;
         try{

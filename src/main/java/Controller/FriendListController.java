@@ -11,25 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class FriendListController extends HttpServlet{
-    private HttpServletRequest req;
+public class FriendListController extends MainController{
     private String sessionID;
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.req = req;
+    protected void doProcess(){
         sessionID = req.getSession().getId();
-        doProcess();
-    }
-
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.req = req;
-        sessionID = req.getSession().getId();
-        doProcess();
-    }
-
-    private void doProcess(){
         try {
             if(req.getParameter("do").equals("add")){//
                 addToFriend(Integer.parseInt(req.getParameter("id")));

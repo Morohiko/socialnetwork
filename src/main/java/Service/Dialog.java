@@ -2,6 +2,7 @@ package Service;
 
 import DAO.ProcessDB;
 import Model.Data;
+import Model.Message;
 import com.sun.org.apache.regexp.internal.RE;
 
 import java.sql.ResultSet;
@@ -11,20 +12,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dialog {
-//    private ResultSet rs;
     public void showDialog(String sessionId, int idUser2){
-        System.out.println("while new dialog");
         int idUser1 = Data.getInstance().getUser(sessionId).getId();
-        System.out.println("while 1");
-        int id = getIdDialog(idUser1, idUser2);
-        System.out.println("while 2");
-        if (id == 0) createNewDiag(idUser1, idUser2, searchFreeIDDiag());
-        System.out.println("while zayebok");
+        int idDiag = getIdDialog(idUser1, idUser2);
+        if (idDiag == 0) createNewDiag(idUser1, idUser2, searchFreeIDDiag());
+        Data.getInstance().getUser(sessionId).setMessages(generateMsgsLisr(idDiag));
+    }
+
+    public void sendMessage(String sessionId, int idUser2, String text){
+        int idUser1 = Data.getInstance().getUser(sessionId).getId();
+        int idDiag = getIdDialog(idUser1, idUser2);
+        if (idDiag == 0) {
+            idDiag = searchFreeIDDiag();
+            createNewDiag(idUser1, idUser2, idDiag);
+        }
+        System.out.println("idDiag = " + idDiag + " text = " + text);
+
+        ProcessDB.addToDiag(Integer.toString(idDiag), text, Utils.getDataTime(),
+                Data.getInstance().getUser(sessionId).getUsername());
+    }
+
+    private ArrayList<Message> generateMsgsLisr(int idDiag){
+        ResultSet rs = ProcessDB.getFromDialogs(idDiag);
+        ArrayList<Message> list = new ArrayList<Message>();
+        list.add(new Message(0, "0", "0", "0"));
+        try {
+            while (rs.next()){
+                Message message = new Message(idDiag, rs.getString("text"),
+                        rs.getString("who"), rs.getString("datatime"));
+                list.add(message);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     private void createNewDiag(int user1, int user2, int freeID){
-        System.out.println("whileCreateNewDiag freeid = " + freeID);
-
         ProcessDB.addToDialogList(user1, user2, freeID);
         ProcessDB.createTableDialog(freeID);
     }
@@ -40,9 +64,7 @@ public class Dialog {
             e.printStackTrace();
         }
         int num = 1;
-        System.out.println("while listsize = " + list.size());
         for (int i = 0; i < list.size(); i++) {
-            System.out.println("while:  listid = " + list.get(i).intValue() + " num = " + num);
             if (list.get(i).intValue() == num) {
                 num++;
                 continue;
@@ -63,7 +85,7 @@ public class Dialog {
                     return Integer.parseInt(rs.getString("idDiag"));
                 }
             }
-        }catch(Exception e) {e.printStackTrace();};
+        }catch(Exception e) {e.printStackTrace();}
         return 0;
     }
 }
